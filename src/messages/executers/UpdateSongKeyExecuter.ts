@@ -11,7 +11,7 @@ export default class UpdateSongKeyExecuter implements IMessageExecuter{
     async executeMessage(message: string) {
         let request:receiveKeyModel = JSON.parse(message)
         let song = await this.songsManager.getSongById(request.songId!)
-        song.url += request.key!
+        song.url += "?"+request.key!
         await this.songsManager.updateSongById(request.songId!, song)
     }
 }

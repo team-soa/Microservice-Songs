@@ -1,3 +1,3 @@
 export default interface IDeleteSongRequester{
-    requestDelete(song:string):void
+    requestDelete(song:string, owner:string):void
 }

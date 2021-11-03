@@ -5,6 +5,7 @@ import Toms from "../models/toms";
 import ISongsManager from "./ISongsManager";
 import IDeleteSongRequester from "./IDeleteSongRequester";
 import IUserKeyRequester from "./IUserKeyRequester";
+import { songsManager } from "../app";
 const uuid = require('uuid');
 
 export default class SongsManager implements ISongsManager{
@@ -23,7 +24,7 @@ export default class SongsManager implements ISongsManager{
     async createSong(song: Song): Promise<boolean>{
         delete song._id
         song.filename = uuid.v1();
-        //song.url = this.storageURL+'/'+song.owner+'/'+song.filename+"?"+user.key
+        song.url = this.storageURL+'/'+song.owner+'/'+song.filename
         if(song.letra){
             song.letraCruda = "";
             song.letra.forEach((content:Toms) => song.letraCruda +=" "+ content.words)
@@ -51,9 +52,6 @@ export default class SongsManager implements ISongsManager{
     async updateSongById(id:string, song:Song):Promise<boolean>{
         const query:Song = <Song>{_id: new ObjectId(id)}
         delete song._id
-        delete song.url
-        delete song.owner
-        delete song.filename
         if(song.letra){
             song.letraCruda = "";
             song.letra.forEach((content:Toms) => song.letraCruda +=" "+ content.words)
@@ -65,7 +63,7 @@ export default class SongsManager implements ISongsManager{
         let song = await this.getSongById(id)
         let result = await this.dataBase.deleteSong(query)
         if(result){
-            this.deleteSongRequester.requestDelete( <string> song.filename)
+            this.deleteSongRequester.requestDelete( <string> song.filename, <string>song.owner)
         }
         return result
     }

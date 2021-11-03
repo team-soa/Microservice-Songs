@@ -1,18 +1,14 @@
 import Song from "../models/song";
-import song from "../models/song";
 
 var express = require('express');
 var router = express.Router();
-var ObjectId = require('mongodb').ObjectId
-var database = require('../public/javascripts/DataBaseInterface');
 var cors = require('cors')
-var {app, corsOptions, songsManager} = require('../app')
-var uuid = require('uuid');
-const keycloak2 = require('../../../config/keycloak.js').getKeycloak();
+import {app, corsOptions, songsManager} from '../app'
+const keycloak2 = require('../config/keycloak').getKeycloak();
 
 
 
-router.get('/', cors(corsOptions), async function(req:any, res:any, next:any) {
+router.get('/', keycloak2.protect('user'), cors(corsOptions), async function(req:any, res:any, next:any) {
   try{
     let query = <Song>{artista: new RegExp(req.query.artista,"i"),
                       nombre: new RegExp(req.query.nombre,"i"),
@@ -22,13 +18,13 @@ router.get('/', cors(corsOptions), async function(req:any, res:any, next:any) {
     let user = req.query.user
     if(user){
       if(req.kauth.grant.access_token.content.preferred_username === req.query.user){
-        songs = songsManager.getPrivateSongs(user, query)
+        songs = await songsManager.getPrivateSongs(user, query)
       }else{
         res.status(403).jsonp({message: "Access Denied to the requested resources"});
         return
       }
     }else{
-      songs = songsManager.getPublicSongs(query)
+      songs = await songsManager.getPublicSongs(query)
     }
     res.jsonp(songs);
   }
@@ -39,7 +35,7 @@ router.get('/', cors(corsOptions), async function(req:any, res:any, next:any) {
 });
 
 
- router.get('/:id',  cors(corsOptions), async function(req:any, res:any, next:any) {
+ router.get('/:id',  keycloak2.protect('premium'), cors(corsOptions), async function(req:any, res:any, next:any) {
   try{
     let id = req.params.id
     let song = await songsManager.getSongById(id)
@@ -62,7 +58,7 @@ router.get('/', cors(corsOptions), async function(req:any, res:any, next:any) {
 
 
 
-  router.put('/:id',  cors(corsOptions), async function(req:any, res:any, next:any) {
+  router.put('/:id', keycloak2.protect('premium'),cors(corsOptions), async function(req:any, res:any, next:any) {
     try{
       const id = req.params.id
       let song = await songsManager.getSongById(id);
@@ -92,7 +88,7 @@ router.get('/', cors(corsOptions), async function(req:any, res:any, next:any) {
 
 
 
- router.post('/',  cors(corsOptions), async function(req:any, res:any, next:any) {
+ router.post('/', keycloak2.protect('premium'), cors(corsOptions), async function(req:any, res:any, next:any) {
   try{
     const song:Song = req.body
     song.owner = req.kauth.grant.access_token.content.preferred_username
@@ -110,7 +106,7 @@ router.get('/', cors(corsOptions), async function(req:any, res:any, next:any) {
 });
 
 
-router.delete('/:id',  cors(corsOptions), async function(req:any, res:any, next:any) {
+router.delete('/:id', keycloak2.protect('premium'), cors(corsOptions), async function(req:any, res:any, next:any) {
   try{
     let id = req.params.id
     let song = await songsManager.getSongById(id);
@@ -120,7 +116,7 @@ router.delete('/:id',  cors(corsOptions), async function(req:any, res:any, next:
         return
       }else{
         const result = await songsManager.deleteSongById(id)
-        if(result.deletedCount === 1){
+        if(result){
           res.jsonp({message:"Successfully deleted one song", result});
         }else{
           res.status(404).jsonp({message:"The song was not deleted.", result});

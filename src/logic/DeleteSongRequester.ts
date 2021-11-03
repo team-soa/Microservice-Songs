@@ -7,8 +7,8 @@ export default class DeleteSongRequester implements  IDeleteSongRequester{
     constructor(deleteStorageSender: IPreSender) {
         this.deleteStorageSender = deleteStorageSender
     }
-    requestDelete(filename:string){
-        let requestDelete = <RequestSongDeleteModel>{file:filename}
+    requestDelete(filename:string, username:string){
+        let requestDelete = <RequestSongDeleteModel>{folder:username, file:filename}
         this.deleteStorageSender.send(JSON.stringify(requestDelete))
     }
 }

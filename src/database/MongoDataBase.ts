@@ -16,6 +16,7 @@ export default class MongoDataBase implements IDataBase{
     
     async insertSong(song:Song):Promise<string>{
       let result = await this.songsCollection.insertOne(song)
+      console.log(result)
       return result.insertedId
     }
 
@@ -34,12 +35,12 @@ export default class MongoDataBase implements IDataBase{
 
 
     async updateSong(query:Song, song:Song):Promise<boolean>{
-        const result = this.songsCollection.updateOne(query, {"$set":song})
+        const result = await this.songsCollection.updateOne(query, {"$set":song})
         return result.matchedCount === 1;
     }
 
     async deleteSong(query:Song):Promise<boolean> {
-        const result = await database.songs.deleteOne(query)
+        const result = await this.songsCollection.deleteOne(query)
         return result.deletedCount === 1
     }
 }
