@@ -1,7 +1,7 @@
 import IMessageExecuter from "./IMessageExecuter";
-import ISongsManager from "../../logic/ISongsManager";
-import receiveKeyModel from "../../models/receiveKeyModel";
-import Song from "../../models/song";
+import ISongsManager from "../managers/ISongsManager";
+import receiveKeyModel from "../requesters/models/receiveKeyModel";
+import Song from "../../domainModel/song";
 
 export default class UpdateSongKeyExecuter implements IMessageExecuter{
     songsManager: ISongsManager

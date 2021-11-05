@@ -1,9 +1,9 @@
-import Song from "../models/song";
+import Song from "../../domainModel/song";
 
 var express = require('express');
 var router = express.Router();
 var cors = require('cors')
-import {app, corsOptions, songsManager} from '../app'
+import {app, corsOptions, songsManager} from '../../configuration/app'
 const keycloak2 = require('../config/keycloak').getKeycloak();
 
 

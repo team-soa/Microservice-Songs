@@ -1,5 +1,5 @@
 import IDataBase from "./IDataBase"
-import Song from "../models/song";
+import Song from "../../domainModel/song";
 
 const MongoClient = require('mongodb').MongoClient
 

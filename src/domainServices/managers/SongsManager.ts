@@ -1,11 +1,11 @@
-import Song from "../models/song";
-import IDataBase from "../database/IDataBase";
+import Song from "../../domainModel/song";
+import IDataBase from "../../applicationServices/database/IDataBase";
 import {ObjectId} from "mongodb";
-import Toms from "../models/toms";
+import Toms from "../../domainModel/toms";
 import ISongsManager from "./ISongsManager";
-import IDeleteSongRequester from "./IDeleteSongRequester";
-import IUserKeyRequester from "./IUserKeyRequester";
-import { songsManager } from "../app";
+import IDeleteSongRequester from "../requesters/IDeleteSongRequester";
+import IUserKeyRequester from "../requesters/IUserKeyRequester";
+import { songsManager } from "../../configuration/app";
 const uuid = require('uuid');
 
 export default class SongsManager implements ISongsManager{

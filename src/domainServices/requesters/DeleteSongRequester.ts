@@ -1,5 +1,5 @@
-import IPreSender from "../messages/PreSender/IPreSender";
-import RequestSongDeleteModel from "../models/requestSongDeleteModel";
+import IPreSender from "../../applicationServices/messages/PreSender/IPreSender";
+import RequestSongDeleteModel from "./models/requestSongDeleteModel";
 import IDeleteSongRequester from "./IDeleteSongRequester";
 
 export default class DeleteSongRequester implements  IDeleteSongRequester{

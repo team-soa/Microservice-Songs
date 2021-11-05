@@ -1,5 +1,5 @@
-import IPreSender from "../messages/PreSender/IPreSender";
-import RequestKeyModel from "../models/requestKeyModel";
+import IPreSender from "../../applicationServices/messages/PreSender/IPreSender";
+import RequestKeyModel from "./models/requestKeyModel";
 import IUserKeyRequester from "./IUserKeyRequester";
 
 export default class UserKeyRequester implements IUserKeyRequester{

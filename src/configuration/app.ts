@@ -1,29 +1,29 @@
-import IDataBase from "./database/IDataBase";
-import MongoDataBase from "./database/MongoDataBase";
-import ISongsManager from "./logic/ISongsManager";
-import SongsManager from "./logic/SongsManager";
-import IDeleteSongRequester from "./logic/IDeleteSongRequester";
-import DeleteSongRequester from "./logic/DeleteSongRequester";
-import IMessageExecuter from "./messages/executers/IMessageExecuter";
-import UpdateSongKeyExecuter from "./messages/executers/UpdateSongKeyExecuter";
-import IUserKeyRequester from "./logic/IUserKeyRequester";
-import UserKeyRequester from "./logic/UserKeyRequester";
-import IMessageReceiver from "./messages/listener/IMessageReceiver";
-import MessageReceiver from "./messages/listener/MessageReceiver";
-import IPreSender from "./messages/PreSender/IPreSender";
-import QueuePreSender from "./messages/PreSender/QueuePreSender";
-import IQueueSender from "./messages/senders/IQueueSender";
-import RabbitSender from "./messages/senders/RabbitSender";
+import IDataBase from "../applicationServices/database/IDataBase";
+import MongoDataBase from "../applicationServices/database/MongoDataBase";
+import ISongsManager from "../domainServices/managers/ISongsManager";
+import SongsManager from "../domainServices/managers/SongsManager";
+import IDeleteSongRequester from "../domainServices/requesters/IDeleteSongRequester";
+import DeleteSongRequester from "../domainServices/requesters/DeleteSongRequester";
+import IMessageExecuter from "../domainServices/executers/IMessageExecuter";
+import UpdateSongKeyExecuter from "../domainServices/executers/UpdateSongKeyExecuter";
+import IUserKeyRequester from "../domainServices/requesters/IUserKeyRequester";
+import UserKeyRequester from "../domainServices/requesters/UserKeyRequester";
+import IMessageReceiver from "../applicationServices/messages/listener/IMessageReceiver";
+import MessageReceiver from "../applicationServices/messages/listener/MessageReceiver";
+import IPreSender from "../applicationServices/messages/PreSender/IPreSender";
+import QueuePreSender from "../applicationServices/messages/PreSender/QueuePreSender";
+import IQueueSender from "../applicationServices/messages/senders/IQueueSender";
+import RabbitSender from "../applicationServices/messages/senders/RabbitSender";
 
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const keycloak = require('./config/keycloak').initKeycloak();
+const keycloak = require('../applicationServices/config/keycloak').initKeycloak();
 var session = require('express-session');
 
-var songsRouter = require('./routes/songs');
+var songsRouter = require('../applicationServices/routes/songs');
 
 var corsOptions = {
   origin: ['http://localhost:4200/', 'http://168.62.39.210:3000/'],

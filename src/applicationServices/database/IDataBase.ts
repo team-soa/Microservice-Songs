@@ -1,4 +1,4 @@
-import Song from "../models/song";
+import Song from "../../domainModel/song";
 
 export default interface IDataBase{
     insertSong(song:Song):Promise<string>
