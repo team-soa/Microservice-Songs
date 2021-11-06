@@ -8,7 +8,7 @@ export default class UpdateSongKeyExecuter implements IMessageExecuter{
     constructor(songsManager: ISongsManager) {
         this.songsManager = songsManager;
     }
-    async executeMessage(message: string) {
+    async executeMessage(message: string): Promise<void> {
         let request:receiveKeyModel = JSON.parse(message)
         let song = await this.songsManager.getSongById(request.songId!)
         song.url += "?"+request.key!
