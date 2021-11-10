@@ -8,6 +8,7 @@ export default class Song{
     letraCruda: string|RegExp|undefined
     nombre: string|RegExp|undefined
     owner: string|undefined
+    language: string|undefined
     url: string|undefined
     _id: any
 }
