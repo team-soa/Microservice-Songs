@@ -26,7 +26,7 @@ var session = require('express-session');
 var songsRouter = require('../applicationServices/routes/songs');
 
 var corsOptions = {
-  origin: ['http://localhost:4200/', 'http://168.62.39.210:3000/'],
+  origin: ['*'],
   optionsSuccessStatus: 200
 }
 
