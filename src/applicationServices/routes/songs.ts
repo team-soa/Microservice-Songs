@@ -35,7 +35,7 @@ router.get('/', keycloak2.protect('user'), cors(corsOptions), async function(req
 });
 
 
- router.get('/:id',  keycloak2.protect('premium'), cors(corsOptions), async function(req:any, res:any, next:any) {
+ router.get('/:id',  keycloak2.protect('user'), cors(corsOptions), async function(req:any, res:any, next:any) {
   try{
     let id = req.params.id
     let song = await songsManager.getSongById(id)
